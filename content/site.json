@@ -1,4 +1,12 @@
 {
+  "images": {
+    "hJyt4Lbp1ak5WmXmwO2Tw": "content/media/hero_serve.webp",
+    "qy01FLSKv4uRk4j3qMCFw7xnw": "content/media/hero_portrait.jpg",
+    "Est6LgTczMqFeenidOS2hOyFc": "content/media/donation_card.jpg",
+    "jFtRd9OgNoL1IXWY277On39xOWA": "content/media/avatar_elder.png",
+    "D148qSeWymWvDqqwH7fazoeBZg": "content/media/avatar_caretaker.png",
+    "ar43sCmH0B6FMiftAIp3JsM4": "content/media/avatar_volunteer.png"
+  },
   "site": {
     "name": "Dr. Smita Sharma Foundation",
     "title": "Dr. Smita Sharma Foundation — In Her Memory",

@@ -249,6 +249,122 @@ apply(HOME_CHUNK, homeChunkOps);
   ]);
 }
 
+// ---------- 3c. rewrite runtime asset URLs in chunks (logo, images, fonts) ----------
+// The extractor rewrote URLs in the HTML, but chunks embed absolute
+// framerusercontent.com URLs — React re-renders images straight from the CDN.
+// Convert each URL to the extractor's local naming (base__query.ext).
+{
+  const urlToLocal = (raw) => {
+    const decoded = raw.replaceAll('&amp;', '&');
+    const u = new URL(decoded);
+    const ext = path.extname(u.pathname);
+    const base = u.pathname.slice(0, u.pathname.length - ext.length);
+    const q = u.search ? '__' + u.search.slice(1).replaceAll('&', '_').replaceAll('=', '-') : '';
+    return '/assets' + base + q + ext;
+  };
+  let rewritten = 0;
+  (function walkMjs(dir) {
+    for (const f of fs.readdirSync(dir)) {
+      const fp = path.join(dir, f);
+      if (fs.statSync(fp).isDirectory()) { walkMjs(fp); continue; }
+      if (!f.endsWith('.mjs')) continue;
+      let c = fs.readFileSync(fp, 'utf8');
+      const before = c;
+      const urls = c.match(/https:\/\/framerusercontent\.com\/[^"'`\\\s)>]+/g) || [];
+      const seen = new Set();
+      for (const raw of urls) {
+        if (seen.has(raw)) continue;
+        seen.add(raw);
+        try { c = c.split(raw).join(urlToLocal(raw)); } catch {}
+      }
+      const gs = c.match(/https:\/\/fonts\.gstatic\.com\/[^"'`\\\s)>]+/g) || [];
+      const gseen = new Set();
+      for (const raw of gs) {
+        if (gseen.has(raw)) continue;
+        gseen.add(raw);
+        try { c = c.split(raw).join(urlToLocal(raw)); } catch {}
+      }
+      if (c !== before) { fs.writeFileSync(fp, c); rewritten += seen.size + gs.length; }
+    }
+  })(DIST);
+  report.push({ file: 'chunks', name: 'runtime asset URL rewrite', ok: true });
+}
+
+// ---------- 3d. runtime page title (Framer sets document.title from runtime metadata) ----------
+{
+  let fixed = 0;
+  (function walkMjs(dir) {
+    for (const f of fs.readdirSync(dir)) {
+      const fp = path.join(dir, f);
+      if (fs.statSync(fp).isDirectory()) { walkMjs(fp); continue; }
+      if (!f.endsWith('.mjs')) continue;
+      let c = fs.readFileSync(fp, 'utf8');
+      const before = c;
+      c = c.split('Charido – Nonprofit & Charity Framer Template').join(S.title);
+      c = c.split('Charido - Nonprofit & Charity Framer Template').join(S.title);
+      if (c !== before) { fs.writeFileSync(fp, c); fixed++; }
+    }
+  })(DIST);
+  report.push({ file: 'chunks', name: 'runtime page title', ok: true });
+}
+
+// ---------- 3e. image swap: overwrite template image files with ours ----------
+// content/site.json → "images": { "<framer-image-id>": "<source url>" }
+// Every local variant of that image id (base__query.ext) gets replaced with the
+// downloaded source — works for both the HTML layer and the runtime chunks.
+{
+  const images = content.images || {};
+  const urlToLocal = (raw) => {
+    const decoded = raw.replaceAll('&amp;', '&');
+    const u = new URL(decoded);
+    const ext = path.extname(u.pathname);
+    const base = u.pathname.slice(0, u.pathname.length - ext.length);
+    const q = u.search ? '__' + u.search.slice(1).replaceAll('&', '_').replaceAll('=', '-') : '';
+    return '/assets' + base + q + ext;
+  };
+  for (const [id, srcUrl] of Object.entries(images)) {
+    try {
+      let buf;
+      if (srcUrl.startsWith('http')) {
+        const res = await fetch(srcUrl);
+        if (!res.ok) throw new Error(res.status + ' ' + srcUrl);
+        buf = Buffer.from(await res.arrayBuffer());
+      } else {
+        buf = fs.readFileSync(path.join(ROOT, srcUrl));
+      }
+      const dir = path.join(DIST, 'assets', 'images');
+      let swaps = 0;
+      for (const f of fs.readdirSync(dir)) {
+        if (f.startsWith(id + '.') || f.startsWith(id + '__')) {
+          fs.writeFileSync(path.join(dir, f), buf);
+          swaps++;
+        }
+      }
+      // fallback: find runtime URLs referencing this id in chunks and materialize those files
+      if (swaps === 0) {
+        const runtimeUrls = new Set();
+        (function scanMjs(d) {
+          for (const f of fs.readdirSync(d)) {
+            const fp = path.join(d, f);
+            if (fs.statSync(fp).isDirectory()) { scanMjs(fp); continue; }
+            if (!f.endsWith('.mjs')) continue;
+            const c = fs.readFileSync(fp, 'utf8');
+            for (const m of c.matchAll(new RegExp('https://framerusercontent\\.com/images/' + id + '\\\\.[^"\'+`\\\\\\\\\\\\s)>]*', 'g'))) runtimeUrls.add(m[0]);
+          }
+        })(DIST);
+        for (const raw of runtimeUrls) {
+          const local = urlToLocal(raw);
+          fs.writeFileSync(path.join(DIST, local.replace(/^\//, '')), buf);
+          swaps++;
+        }
+      }
+      report.push({ file: 'images', name: `swap ${id.slice(0, 10)}…`, ok: swaps > 0 });
+    } catch (e) {
+      report.push({ file: 'images', name: `swap ${id.slice(0, 10)}…`, ok: false });
+    }
+  }
+}
+
 // ---------- 3. global strings across all pages (nav/footer shared) ----------
 // footer/nav strings ALSO live in the shared runtime chunk (script_main)
 {
