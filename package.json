@@ -1,0 +1,13 @@
+{
+  "name": "drsmita-cms-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dr. Smita Sharma Foundation — Framer-exact site with content overlay CMS. Build applies content/site.json onto the extracted Framer output (both the SSR HTML and the runtime chunks).",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "npx serve dist -l 4174",
+    "dev": "node build.mjs && npx serve dist -l 4174",
+    "local-admin": "npx decap-server"
+  }
+}

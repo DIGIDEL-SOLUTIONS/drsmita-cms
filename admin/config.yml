@@ -1,0 +1,116 @@
+backend:
+  name: github
+  repo: DIGIDEL-SOLUTIONS/drsmita-cms
+  branch: main
+  # One-time setup: create a GitHub OAuth app (callback: <your-domain>/admin)
+  # and set the client id/secret in an OAuth gateway (e.g. https://github.com/i-do-dev/decap-github-oauth-app
+  # deployed on Vercel). Until then use: npm run local-admin (no login needed, edits stay local).
+local_backend: true
+publish_mode: editorial_workflow
+media_folder: "site/assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "content"
+    label: "Website Content"
+    files:
+      - name: "site"
+        label: "Global & Home"
+        file: "content/site.json"
+        format: "json"
+        fields:
+          - name: "site"
+            label: "Global"
+            widget: "object"
+            fields:
+              - { name: "name", label: "Foundation name", widget: "string" }
+              - { name: "title", label: "Browser tab title", widget: "string" }
+              - { name: "email", label: "Contact email", widget: "string" }
+              - { name: "location", label: "Location line", widget: "string" }
+          - name: "home"
+            label: "Home page"
+            widget: "object"
+            fields:
+              - name: "hero"
+                label: "Hero"
+                widget: "object"
+                fields:
+                  - { name: "badgeKicker", label: "Badge (highlighted)", widget: "string" }
+                  - { name: "badgeLine", label: "Badge (rest of line)", widget: "string" }
+                  - { name: "badgeSub", label: "Badge second line", widget: "string" }
+                  - { name: "titlePre", label: "Headline (before accent)", widget: "string" }
+                  - { name: "titleAccent", label: "Headline (accent word, gold)", widget: "string" }
+                  - { name: "titlePost", label: "Headline (after accent)", widget: "string" }
+                  - { name: "subtitle", label: "Hero paragraph", widget: "text" }
+                  - { name: "button", label: "Hero button", widget: "string" }
+                  - { name: "counterNumber", label: "Counter number", widget: "string" }
+                  - { name: "counterLabel", label: "Counter label", widget: "string" }
+              - name: "about"
+                label: "About section"
+                widget: "object"
+                fields:
+                  - { name: "heading", label: "Heading", widget: "string" }
+                  - { name: "sub", label: "Paragraph", widget: "text" }
+                  - name: "stat1"
+                    label: "Stat 1"
+                    widget: "object"
+                    fields:
+                      - { name: "value", label: "Number", widget: "string" }
+                      - { name: "suffix", label: "Suffix", widget: "string" }
+                      - { name: "label", label: "Label", widget: "string" }
+                  - name: "stat2"
+                    label: "Stat 2"
+                    widget: "object"
+                    fields:
+                      - { name: "value", label: "Number", widget: "string" }
+                      - { name: "suffix", label: "Suffix", widget: "string" }
+                      - { name: "label", label: "Label", widget: "string" }
+              - { name: "causes", label: "Causes section", widget: "object", fields: [{ name: "heading", label: "Heading", widget: "string" }] }
+              - name: "impact"
+                label: "Impact section"
+                widget: "object"
+                fields:
+                  - { name: "heading", label: "Heading", widget: "string" }
+                  - { name: "counter", label: "Counter number", widget: "string" }
+                  - { name: "counterLabel", label: "Counter label", widget: "string" }
+                  - { name: "featureTitle", label: "Feature title", widget: "string" }
+                  - { name: "featureSub", label: "Feature text", widget: "string" }
+                  - { name: "counter2", label: "Counter 2 number", widget: "string" }
+                  - { name: "counter2Label", label: "Counter 2 label", widget: "string" }
+                  - { name: "counter2Sub", label: "Counter 2 text", widget: "string" }
+              - name: "donation"
+                label: "Donation section"
+                widget: "object"
+                fields:
+                  - { name: "heading", label: "Heading", widget: "text" }
+                  - { name: "sub", label: "Sub line", widget: "text" }
+              - name: "volunteer"
+                label: "Volunteer section"
+                widget: "object"
+                fields:
+                  - { name: "heading", label: "Heading", widget: "string" }
+                  - { name: "sub", label: "Paragraph", widget: "text" }
+              - name: "testimonials"
+                label: "Testimonials section"
+                widget: "object"
+                fields:
+                  - { name: "heading", label: "Heading", widget: "string" }
+              - name: "faq"
+                label: "FAQ section"
+                widget: "object"
+                fields:
+                  - { name: "heading", label: "Heading", widget: "string" }
+                  - { name: "sub", label: "Sub line", widget: "text" }
+                  - name: "items"
+                    label: "Questions"
+                    widget: "list"
+                    fields:
+                      - { name: "q", label: "Question", widget: "string" }
+                      - { name: "a", label: "Answer", widget: "text" }
+              - { name: "blog", label: "Blog section", widget: "object", fields: [{ name: "heading", label: "Heading", widget: "string" }] }
+              - name: "cta"
+                label: "Call to action"
+                widget: "object"
+                fields:
+                  - { name: "heading", label: "Heading", widget: "string" }
+                  - { name: "button", label: "Button", widget: "string" }

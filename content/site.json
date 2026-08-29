@@ -1,0 +1,90 @@
+{
+  "site": {
+    "name": "Dr. Smita Sharma Foundation",
+    "title": "Dr. Smita Sharma Foundation — In Her Memory",
+    "tagline": "This is humanity, not charity",
+    "email": "contact@drsmitasharmafoundation.org",
+    "location": "Gurugram, Haryana — 122001, India"
+  },
+  "home": {
+    "hero": {
+      "badgeKicker": "In loving memory",
+      "badgeLine": "of Dr. Smita Sharma",
+      "badgeSub": "Dr. Smita Sharma Foundation — This is humanity, not charity",
+      "titlePre": "Because ",
+      "titleAccent": "every breath",
+      "titlePost": " deserves kindness.",
+      "subtitle": "A sanctuary of compassion, created in her loving memory — standing beside those facing cancer, aging alone, and silent suffering, with dignity, compassion, and presence.",
+      "button": "Walk Through Her Journey",
+      "counterNumber": "1,611",
+      "counterLabel": "Days she lived — fully, bravely, lovingly"
+    },
+    "about": {
+      "heading": "A sanctuary of compassion, built in her memory",
+      "sub": "Dr. Smita Sharma — educator, mentor, and a soul of grace — spent nearly two decades shaping minds at LBSIM, New Delhi. This foundation carries her belief forward: if we have the ability to help, we also have the responsibility to act.",
+      "stat1": { "value": "10", "suffix": "k+", "label": "Meals served to elders" },
+      "stat2": { "value": "200", "suffix": "+", "label": "Children educated & rehabilitated" }
+    },
+    "causes": {
+      "heading": "The causes she lived for, the work we continue"
+    },
+    "impact": {
+      "heading": "Every smile we bring becomes our greatest reward",
+      "counter": "50",
+      "counterLabel": "Health camps organized",
+      "featureTitle": "Humanity, not charity",
+      "featureSub": "Care guided by compassion, dignity, and presence.",
+      "counter2": "100",
+      "counter2Label": "Active volunteers",
+      "counter2Sub": "Kindness grows when shared."
+    },
+    "donation": {
+      "heading": "Your generosity helps bring care, dignity, and hope to lives that need it most.",
+      "sub": "Every contribution becomes a hand held, a meal served, a life dignified."
+    },
+    "volunteer": {
+      "heading": "Be the change — carry her light forward",
+      "sub": "Join our circle of compassion. Your time, skills, and willingness to help carry forward the values Dr. Smita Sharma lived by."
+    },
+    "testimonials": {
+      "heading": "Real stories from the lives she touched"
+    },
+    "faq": {
+      "heading": "Frequently asked questions",
+      "sub": "Everything you need to know about giving, volunteering, and walking with us.",
+      "items": [
+        {
+          "q": "How is my donation used?",
+          "a": "Every contribution goes directly to cancer patient support, children's education, elder care, and our gaushala — food, medicines, and dignity for those who need it most."
+        },
+        {
+          "q": "Is my donation secure?",
+          "a": "Yes. Donations are processed securely, and every rupee is accounted for with the same integrity Dr. Sharma lived by."
+        },
+        {
+          "q": "Can I make a monthly donation?",
+          "a": "Yes — a monthly gift becomes a steady companion for the families we walk beside, sustaining care all year round."
+        },
+        {
+          "q": "Can I volunteer without previous experience?",
+          "a": "Yes. What matters most is presence and compassion — our team will guide you every step of the way."
+        },
+        {
+          "q": "Will I receive updates about my donation?",
+          "a": "Yes — heartfelt stories and honest reports of the lives your kindness touched will reach you regularly."
+        },
+        {
+          "q": "How can my organization partner with you?",
+          "a": "Write to us at contact@drsmitasharmafoundation.org — we welcome partnerships in healthcare, education, elder care, and animal welfare."
+        }
+      ]
+    },
+    "blog": {
+      "heading": "Stories of courage, awareness & hope"
+    },
+    "cta": {
+      "heading": "Every act of kindness continues her journey",
+      "button": "Support Her Mission"
+    }
+  }
+}
